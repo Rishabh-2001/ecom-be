@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
-const port = process.env.PORT || 3444;
+const PORT = process.env.PORT || 3444;
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -33,8 +33,8 @@ app.get("/data", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log("SErver running at port ", port);
+app.listen(PORT, () => {
+  console.log("SErver running at port ", PORT);
 });
 
 // cart page PENDING
