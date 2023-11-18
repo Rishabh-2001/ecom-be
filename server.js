@@ -24,13 +24,7 @@ app.use(
   })
 );
 app.get("/data", async (req, res) => {
-  const { data, error } = await getAllData();
-  if (error) {
-    res.status(500).send("Server Error");
-  } else {
-    console.log(">>", data.length);
-    res.send(data);
-  }
+    res.send("Hello , guy")
 });
 
 app.listen(PORT, () => {
