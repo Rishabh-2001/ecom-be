@@ -4,6 +4,7 @@ const {
   addProduct,
   getProducts,
   getVendersList,
+  getAllOrders,
 } = require("../../db/db.fun");
 
 const route = require("express").Router();
@@ -121,6 +122,18 @@ route.get("/vendorList", (req, res) => {
       return res.status(401).json({ error: err });
     });
 });
+route.get("/allOrder", (req, res) => {
+    const admin=req.headers.admintoken;
+     console.log("ADDDD:", admin);
+    getAllOrders()
+      .then((resp) => {
+        console.log("RES", resp);
+        res.status(200).send(resp);
+      })
+      .catch((err) => {
+        return res.status(401).json({ error: err });
+      });
+  });
 
 route.post("/disable/:id", (req, res) => {
   console.log("Disable");
@@ -128,6 +141,7 @@ route.post("/disable/:id", (req, res) => {
 route.post("/deactivate/:id", (req, res) => {
   console.log("deactivate");
 });
+
 
 module.exports = {
   adminRoute: route,

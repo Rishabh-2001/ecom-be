@@ -112,6 +112,25 @@ async function getVendersList() {
     throw error;
   }
 }
+
+async function getAllOrders() {
+  const finalRes = [];
+  try {
+    const citiesRef = db.collection("Orders");
+    const snapshot = await citiesRef.get();
+    snapshot.forEach((doc) => {
+      const formatData = {
+        id: doc.id,
+        order: doc.data(),
+      };
+      finalRes.push(formatData);
+    });
+    console.log("RERERE", finalRes);
+    return finalRes;
+  } catch (error) {
+    throw error;
+  }
+}
 async function getCartItems({ addedBy }) {
   try {
     const citiesRef = db.collection("Users").doc(addedBy).collection("Cart");
@@ -153,6 +172,22 @@ async function getOrderItems({ addedBy }) {
     const finalRes = await Promise.all(orderDetailsPromise);
     console.log("ORDER", finalRes);
     return finalRes;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getUserProfile({userId}) {
+
+  try {
+    const cityRef = db.collection('Users').doc(userId);
+    const doc = await cityRef.get();
+    if (!doc.exists) {
+      console.log('No such document!');
+    } else {
+      console.log('Document data:', doc.data());
+      return {data: doc.data()};
+    }
   } catch (error) {
     throw error;
   }
@@ -483,6 +518,7 @@ async function getProducts(page, pageSize) {
   }
 }
 
+
 // getVenders(1,10)
 // AddUser();
 // check login
@@ -530,4 +566,6 @@ module.exports = {
   addProductToCart,
   getVenders,
   getVendersList,
+  getUserProfile,
+  getAllOrders,
 };

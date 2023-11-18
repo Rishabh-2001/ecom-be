@@ -10,6 +10,7 @@ const {
   addToOrders,
   deleteAllDocumentsInSubcollection,
   getOrderItems,
+  getUserProfile,
 } = require("../../db/db.fun");
 
 const route = require("express").Router();
@@ -146,6 +147,18 @@ route.get("/getOrders", (req, res) => {
     });
 });
 
+
+route.get("/getProfile", (req, res) => {
+    const userId = req.headers.usertoken;
+    getUserProfile({ userId })
+      .then((resp) => {
+        console.log("RES", resp);
+        res.status(200).send(resp);
+      })
+      .catch((err) => {
+        return res.status(401).json({ error: err });
+      });
+  });
 // route.post('/disable/:id', (req,res)=>{
 //     console.log("Disable");
 // })
